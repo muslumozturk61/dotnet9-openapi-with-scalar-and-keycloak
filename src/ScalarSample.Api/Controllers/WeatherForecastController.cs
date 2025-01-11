@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ScalarSample.Api.Controllers
@@ -18,7 +19,11 @@ namespace ScalarSample.Api.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
+        [HttpGet("GetWeatherForecast")]
+        [EndpointSummary("This is a summary from OpenApi attributes.")]
+        [EndpointDescription("This is a description from OpenApi attributes.")]
+        [EndpointName("FromAttributes")]
+        [Produces(typeof(IEnumerable<WeatherForecast>))]
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
@@ -28,6 +33,13 @@ namespace ScalarSample.Api.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [Authorize]
+        [HttpGet("Claims")]
+        public Dictionary<string, string> GetClaims()
+        {
+            return User.Claims.ToDictionary(c => c.Type, c => c.Value);
         }
     }
 }
