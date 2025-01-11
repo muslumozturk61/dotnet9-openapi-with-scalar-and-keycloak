@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/src/ScalarSample.Api/.vs
+/src/ScalarSample.Api/bin/Debug/net9.0
+/src/ScalarSample.Api/obj/Debug/net9.0
+/src/ScalarSample.Api/obj
+/src/.vs
