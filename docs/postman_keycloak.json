@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "55fd6e9e-dfb3-4c1a-964f-d12f48c212d7",
+		"name": "Keycloak-Sample",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26729450"
+	},
+	"item": [
+		{
+			"name": "Keycloak-Configuration",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/realms/sample-realm/.well-known/openid-configuration",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"realms",
+						"sample-realm",
+						".well-known",
+						"openid-configuration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login-Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"jwt_access_token\", jsonData.access_token);",
+							"postman.setEnvironmentVariable(\"jwt_refresh_token\", jsonData.refresh_token);",
+							"postman.setEnvironmentVariable(\"jwt_id_token\", jsonData.id_token);",
+							"var jwtComponents = jsonData.access_token.split(\".\");",
+							"var jwtHeader = atob(jwtComponents[0]);",
+							"var jwtPayload = atob(jwtComponents[1]);",
+							"console.info(`JWT Header: ${JSON.stringify(JSON.parse(jwtHeader),null,2)}`);",
+							"console.info(`JWT Payload: ${JSON.stringify(JSON.parse(jwtPayload),null,2)}`);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.variables.set(\"username\", \"aflynn@cargurus.com\");",
+							"pm.variables.set(\"password\", \"infinitecatsrepeatingmantras\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "sample-client",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "UuYxuT4eutvrh9YRd5qXXbmtXCeZrBwg",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "openid",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/realms/sample-realm/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"realms",
+						"sample-realm",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login-Client",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"jwt_access_token\", jsonData.access_token);",
+							"postman.setEnvironmentVariable(\"jwt_refresh_token\", jsonData.refresh_token);",
+							"postman.setEnvironmentVariable(\"jwt_id_token\", jsonData.id_token);",
+							"var jwtComponents = jsonData.access_token.split(\".\");",
+							"var jwtHeader = atob(jwtComponents[0]);",
+							"var jwtPayload = atob(jwtComponents[1]);",
+							"console.info(`JWT Header: ${JSON.stringify(JSON.parse(jwtHeader),null,2)}`);",
+							"console.info(`JWT Payload: ${JSON.stringify(JSON.parse(jwtPayload),null,2)}`);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.variables.set(\"username\", \"aflynn@cargurus.com\");",
+							"pm.variables.set(\"password\", \"infinitecatsrepeatingmantras\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "sample-client",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "3XKGb1E8kkgehuwyrXu9zIKUZuyKQKFA",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "openid",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/realms/sample-realm/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"realms",
+						"sample-realm",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"jwt_access_token\", jsonData.access_token);",
+							"postman.setEnvironmentVariable(\"jwt_refresh_token\", jsonData.refresh_token);",
+							"postman.setEnvironmentVariable(\"jwt_id_token\", jsonData.id_token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "sample-client",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "UuYxuT4eutvrh9YRd5qXXbmtXCeZrBwg",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "refresh_token",
+							"type": "text"
+						},
+						{
+							"key": "refresh_token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0YTFiMjlmYy1lZmZjLTQ1NTItYWM3Yi00ODVkZTdjMDg1M2EifQ.eyJleHAiOjE3MzY2MDM3NDIsImlhdCI6MTczNjYwMTk0MiwianRpIjoiMjExNGViYTEtYzlmZS00MDA1LWFkM2UtOGRkMGM1ZTk4YjYyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9zYW1wbGUtcmVhbG0iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL3NhbXBsZS1yZWFsbSIsInN1YiI6IjJmNDM2ODhlLTg2OWUtNGJhMi05ZTBmLWZhODY5MDRjYmU5YiIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJzYW1wbGUtY2xpZW50Iiwic2lkIjoiMmViODFmYjktZjdhNS00ZjEzLTk1MmUtNDJlMGJkNmQwM2NlIiwic2NvcGUiOiJvcGVuaWQgYmFzaWMgZW1haWwgd2ViLW9yaWdpbnMgYWNyIHJvbGVzIHByb2ZpbGUifQ.7I9qzHVRkYbbWG_3v70Zt6mVhG9LfEs4JkfA3t3vbtS0uyKSR4Ef3IKJz1ARnrlAcIKtwnRgToA6KyE36vCIEA",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/realms/sample-realm/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"realms",
+						"sample-realm",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "refresh_token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlZTc0MWFhMy04NjZkLTQ0ZjEtOGFiMy01YzQwMDljNmQzMjIifQ.eyJleHAiOjE3MzU3NTk5NzYsImlhdCI6MTczNTc1ODE3NiwianRpIjoiOTQ4ZGM5MGItYzIzNS00YWZjLTk3MmQtMDA0YTAxMmRlNmUxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9teS1yZWFsbSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9yZWFsbXMvbXktcmVhbG0iLCJzdWIiOiJkNTAyMWVlZC1lZGE5LTRkMDUtODMwNC0zZWVkODI2MzhhM2MiLCJ0eXAiOiJSZWZyZXNoIiwiYXpwIjoicHVibGljLWNsaWVudCIsInNpZCI6ImNmZDcxNDIzLWNhOTQtNGNiMi1hZTgyLTVkNTkxY2MxYjAzNiIsInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUgYWNyIGJhc2ljIHdlYi1vcmlnaW5zIHJvbGVzIn0.GHp9_Uk2N1e6PlTt6pC_387MuO38Cj0qCFNKOA3Zl75d-lmUh-NGTBLW4QBMgP6bDWRarZB7tXlCiyAw0d8eGA",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "public-client",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "3XKGb1E8kkgehuwyrXu9zIKUZuyKQKFA",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/realms/sample-realm/protocol/openid-connect/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"realms",
+						"sample-realm",
+						"protocol",
+						"openid-connect",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

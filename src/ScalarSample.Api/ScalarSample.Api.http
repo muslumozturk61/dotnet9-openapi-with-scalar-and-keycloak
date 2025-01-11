@@ -1,0 +1,6 @@
+@ScalarSample.Api_HostAddress = http://localhost:5041
+
+GET {{ScalarSample.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
