@@ -1,5 +1,7 @@
 # .Net 9 OpenApi With Scalar and Keyclaok
 
+Uygulandırma yapılandırması ve proje yapısı ile ilgili anlattımı ile ilgili videoyu [youtubeden](https://www.youtube.com/watch?v=M81Ve6gF_Bs) izleyebilirsiniz.
+
 
 add Scalar.AspNetCore dependecy to ScalarSample.Api project
 
