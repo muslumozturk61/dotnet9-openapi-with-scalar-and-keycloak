@@ -74,6 +74,23 @@ action attributes for documentation
   [Produces(typeof(IEnumerable<WeatherForecast>))]
 ```
 
+model documentation with attributes
+```csharp
+ public class WeatherForecast
+ {
+     [Description("This is a Date.")]
+     public DateOnly Date { get; set; }
+
+     public int TemperatureC { get; set; }
+
+     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+
+     [Description("This is a Summary.")]
+     public string? Summary { get; set; }
+ }
+```
+
+
 execute this command to run keycloak on docker
 
 ``` sh
